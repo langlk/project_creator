@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'fileutils'
 
 class ProjectCreator
@@ -48,13 +50,13 @@ class ProjectCreator
 
   def fill_script(name)
     script_file = File.open("../#{@project_root}/lib/#{snake_case_name(name)}.rb", "w")
-    script_file.print("class #{camel_case_name(name)}\nend")
+    script_file.print("#!/usr/bin/env ruby\n\nclass #{camel_case_name(name)}\nend")
     script_file.close
   end
 
   def fill_spec(name)
     spec_file = File.open("../#{@project_root}/spec/#{snake_case_name(name)}_spec.rb", "w")
-    spec_file.print("require 'rspec'\nrequire '#{snake_case_name(name)}'\n\ndescribe('#{camel_case_name(name)}') do\nend")
+    spec_file.print("#!/usr/bin/env ruby\n\nrequire 'rspec'\nrequire '#{snake_case_name(name)}'\n\ndescribe('#{camel_case_name(name)}') do\nend")
     spec_file.close
   end
 

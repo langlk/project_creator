@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'rspec'
 require 'fileutils'
 require 'project_creator'
@@ -106,7 +108,7 @@ describe("ProjectCreator#add_class") do
     creator.add_class(["newclass"])
     script_file = File.open("../new_project/lib/newclass.rb", "r")
     script_contents = script_file.read
-    expect(script_contents).to(eq("class Newclass\nend"))
+    expect(script_contents).to(eq("#!/usr/bin/env ruby\n\nclass Newclass\nend"))
     FileUtils.remove_dir("../new_project")
   end
 
@@ -116,7 +118,7 @@ describe("ProjectCreator#add_class") do
     creator.add_class(["newclass"])
     script_file = File.open("../new_project/spec/newclass_spec.rb", "r")
     script_contents = script_file.read
-    expect(script_contents).to(eq("require 'rspec'\nrequire 'newclass'\n\ndescribe('Newclass') do\nend"))
+    expect(script_contents).to(eq("#!/usr/bin/env ruby\n\nrequire 'rspec'\nrequire 'newclass'\n\ndescribe('Newclass') do\nend"))
     FileUtils.remove_dir("../new_project")
   end
 end
