@@ -17,6 +17,17 @@ describe("ProjectCreator#make_project") do
     expect(error).to(eq(Errno::EEXIST))
     FileUtils.remove_dir("../new_project")
   end
+
+  it("creates lib and spec directories within new root directory") do
+    creator = ProjectCreator.new()
+    creator.make_project("new_project")
+    FileUtils.cd("../new_project/lib") {
+      expect(FileUtils.pwd()).to(eq("/Users/Guest/Desktop/new_project/lib"))
+    }
+    FileUtils.cd("../new_project/spec") {
+      expect(FileUtils.pwd()).to(eq("/Users/Guest/Desktop/new_project/spec"))
+    }
+  end
 end
 
 describe("ProjectCreator#make_directory_name") do

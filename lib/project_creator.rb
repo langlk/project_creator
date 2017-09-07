@@ -7,8 +7,12 @@ class ProjectCreator
   end
 
   def make_project(name)
+    project_root = make_directory_name(name)
     begin
-      FileUtils.mkdir("../" + make_directory_name(name))
+      FileUtils.mkdir("../" + project_root)
+      FileUtils.cd("../" + project_root)
+      FileUtils.mkdir("lib")
+      FileUtils.mkdir("spec")
     rescue SystemCallError => e
       return e.class
     end
