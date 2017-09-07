@@ -1,5 +1,21 @@
 # Ruby Project Creator
 
+#### _Project in Ruby_
+
+#### By Kelsey Langlois and Luciano Oliveira
+
+## Description
+
+_A Ruby script that creates the skeleton directory for a Ruby project, including a Gemfile with rspec and pry, a README with a template, and lib and spec files for each class name provided._
+
+## Setup/Installation Requirements
+
+* Clone this repository
+* From the root directory, run ```$ ruby lib/create_project.rb "project name" "class name" "class name"```
+  * Project name is required.
+  * Class names are optional; include none, or as many as are needed.
+* A directory "project_name" will be created in the parent directory where this repository is located.
+
 ## Specifications
 
 * Program creates root directory with inputted name in directory above project_creator
@@ -55,3 +71,17 @@
   * Example Output: ```class NewClass```
 * Program sets up README file template
   * Example Output: [All the README stuff]
+
+## Support and contact details
+
+_Please contact [kels.langlois@gmail.com](mailto:kels.langlois@gmail.com) with questions, comments, or issues._
+
+## Technologies Used
+
+* Ruby
+
+### License
+
+Copyright (c) 2017 **Kelsey Langlois, Luciano Oliveira**
+
+*This software is licensed under the MIT license.*
