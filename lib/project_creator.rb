@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'pry'
 
 class ProjectCreator
   def initialize
@@ -71,7 +72,28 @@ class ProjectCreator
           FileUtils.touch(["lib/" + file_name + ".rb", "spec/" + file_name + "_spec.rb"])
           fill_script(name)
           fill_spec(name)
+          puts "Class #{camel_case_name(name)} added to #{@project_root}"
         }
+      end
+    end
+  end
+end
+
+# Handles running script from terminal
+project_name = ARGV[0]
+class_names = ARGV[1..-1]
+if (project_name != false) & (project_name.length > 0)
+  creator = ProjectCreator.new()
+  error = creator.make_project(project_name)
+  if error == Errno::EEXIST
+    puts "Error: Directory #{creator.snake_case_name(project_name)} Exists"
+  else
+    puts "Project created in directory #{creator.snake_case_name(project_name)}"
+    if class_names != false & (class_names.length > 0)
+      class_names = class_names.select {|name| name.length > 0}
+      error = creator.add_class(class_names)
+      if error.include?("Error: Class")
+        puts error
       end
     end
   end
