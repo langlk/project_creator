@@ -2,9 +2,15 @@
 
 ## Specifications
 
-* Program creates root directory with inputted name
+* Program creates root directory with inputted name in directory above project_creator
   * Example Input: "new_project"
-  * Example Output: new directory "new_project"
+  * Example Output: new directory "Desktop/new_project"
+* Program will not create new directory with name if directory already exists
+  * Example Input: "old_project"
+  * Example Output: "Error: Project Exists Already"
+* Program properly formats multi-word name
+  * Example Input: "New Project"
+  * Example Output: "new_project"
 * Program creates lib and spec directories within root directory
   * Example Output: directories "new_project/lib" and "new_project/spec"
 * Program creates Gemfile and README.md files
