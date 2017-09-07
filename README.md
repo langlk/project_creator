@@ -1,6 +1,6 @@
 # Ruby Project Creator
 
-#### _Project in Ruby_
+#### _Epicodus Practice in Ruby, September 7, 2017_
 
 #### By Kelsey Langlois and Luciano Oliveira
 
