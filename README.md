@@ -31,7 +31,7 @@
   * Example Output: "lib/newclass.rb", "lib/new_new_class.rb", "spec/newclass_spec.rb", "spec/new_new_class_spec.rb"
 * Program adds basic gems to Gemfile
   * Example Output:
-        
+
         source 'https://rubygems.org'
 
         gem 'rspec'
@@ -39,6 +39,7 @@
 * Program adds basic text to class files
   * Example Input: "Newclass"
   * Example Output:
+        
         # Script File
         class Newclass
         end
