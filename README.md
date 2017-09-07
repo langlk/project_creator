@@ -39,12 +39,10 @@
   * Example Input: "Newclass"
   * Example Output:
         # Script File
-
         class Newclass
         end
 
         # Spec File
-
         require 'rspec'
         require 'newclass'
 
