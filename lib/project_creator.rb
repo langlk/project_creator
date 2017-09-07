@@ -28,25 +28,18 @@ class ProjectCreator
     words.join(" ")
   end
 
-  def make_project(name)
-    @project_root = snake_case_name(name)
-    begin
-      FileUtils.mkdir("../" + @project_root)
-      FileUtils.cd("../" + @project_root) {
-        FileUtils.mkdir(["lib", "spec"])
-        FileUtils.touch(["Gemfile", "README.md"])
-        gemfile = File.open("Gemfile", "w")
-        gemfile.print("source 'https://rubygems.org'\n\ngem 'rspec'\ngem 'pry'")
-        gemfile.close
-        readme = File.open("README.md", "w")
-        readme_template = File.open("../project_creator/readme_template.md", "r")
-        readme_contents = readme_template.read
-        readme.print("# #{title_case(name)}\n\n" + readme_contents)
-        readme.close
-      }
-    rescue SystemCallError => e
-      return e.class
-    end
+  def fill_gemfile
+    gemfile = File.open("Gemfile", "w")
+    gemfile.print("source 'https://rubygems.org'\n\ngem 'rspec'\ngem 'pry'")
+    gemfile.close
+  end
+
+  def fill_readme(project_name)
+    readme = File.open("README.md", "w")
+    readme_template = File.open("../project_creator/readme_template.md", "r")
+    readme_contents = readme_template.read
+    readme.print("# #{title_case(project_name)}\n\n" + readme_contents)
+    readme.close
   end
 
   def fill_script(name)
@@ -60,6 +53,23 @@ class ProjectCreator
     spec_file.print("#!/usr/bin/env ruby\n\nrequire 'rspec'\nrequire '#{snake_case_name(name)}'\n\ndescribe('#{camel_case_name(name)}') do\nend")
     spec_file.close
   end
+
+  def make_project(name)
+    @project_root = snake_case_name(name)
+    begin
+      FileUtils.mkdir("../" + @project_root)
+      FileUtils.cd("../" + @project_root) {
+        FileUtils.mkdir(["lib", "spec"])
+        FileUtils.touch(["Gemfile", "README.md"])
+        fill_gemfile
+        fill_readme(name)
+      }
+    rescue SystemCallError => e
+      return e.class
+    end
+  end
+
+
 
   def add_class(names)
     names.each do |name|
@@ -80,21 +90,21 @@ class ProjectCreator
 end
 
 # Handles running script from terminal
-project_name = ARGV[0]
-class_names = ARGV[1..-1]
-if (project_name != false) & (project_name.length > 0)
-  creator = ProjectCreator.new()
-  error = creator.make_project(project_name)
-  if error == Errno::EEXIST
-    puts "Error: Directory #{creator.snake_case_name(project_name)} Exists"
-  else
-    puts "Project created in directory #{creator.snake_case_name(project_name)}"
-    if class_names != false & (class_names.length > 0)
-      class_names = class_names.select {|name| name.length > 0}
-      error = creator.add_class(class_names)
-      if error.include?("Error: Class")
-        puts error
-      end
-    end
-  end
-end
+# project_name = ARGV[0]
+# class_names = ARGV[1..-1]
+# if (project_name != false) & (project_name.length > 0)
+#   creator = ProjectCreator.new()
+#   error = creator.make_project(project_name)
+#   if error == Errno::EEXIST
+#     puts "Error: Directory #{creator.snake_case_name(project_name)} Exists"
+#   else
+#     puts "Project created in directory #{creator.snake_case_name(project_name)}"
+#     if class_names != false & (class_names.length > 0)
+#       class_names = class_names.select {|name| name.length > 0}
+#       error = creator.add_class(class_names)
+#       if error.include?("Error: Class")
+#         puts error
+#       end
+#     end
+#   end
+# end
