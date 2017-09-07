@@ -50,6 +50,14 @@ describe("ProjectCreator#make_project") do
     expect(gemfile_contents).to(eq(gemfile_expected))
     FileUtils.remove_dir("../new_project")
   end
+
+  it("sets up README file template") do
+    creator = ProjectCreator.new()
+    creator.make_project("new project")
+    readme = File.open("../new_project/README.md", "r")
+    readme_expected = File.open("readme_expected.md", "r")
+    expect(readme.read).to(eq(readme_expected.read))
+  end
 end
 
 describe("ProjectCreator#snake_case_name") do

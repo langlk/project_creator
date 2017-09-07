@@ -17,6 +17,14 @@ class ProjectCreator
     words.join("")
   end
 
+  def title_case(name)
+    words = name.downcase.split
+    words.each do |word|
+      word.capitalize!
+    end
+    words.join(" ")
+  end
+
   def make_project(name)
     @project_root = snake_case_name(name)
     begin
@@ -27,6 +35,11 @@ class ProjectCreator
         gemfile = File.open("Gemfile", "w")
         gemfile.print("source 'https://rubygems.org'\n\ngem 'rspec'\ngem 'pry'")
         gemfile.close
+        readme = File.open("README.md", "w")
+        readme_template = File.open("../project_creator/readme_template.md", "r")
+        readme_contents = readme_template.read
+        readme.print("# #{title_case(name)}\n\n" + readme_contents)
+        readme.close
       }
     rescue SystemCallError => e
       return e.class

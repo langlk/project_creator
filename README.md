@@ -39,7 +39,7 @@
 * Program adds basic text to class files
   * Example Input: "Newclass"
   * Example Output:
-        
+
         # Script File
         class Newclass
         end
@@ -53,5 +53,5 @@
 * Program properly formats class name in files
   * Example Input: "new class"
   * Example Output: ```class NewClass```
-* _Bonus if we have time_ Program sets up README file template
+* Program sets up README file template
   * Example Output: [All the README stuff]
