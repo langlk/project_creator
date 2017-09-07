@@ -69,8 +69,6 @@ class ProjectCreator
     end
   end
 
-
-
   def add_class(names)
     names.each do |name|
       file_name = snake_case_name(name)
@@ -88,23 +86,3 @@ class ProjectCreator
     end
   end
 end
-
-# Handles running script from terminal
-# project_name = ARGV[0]
-# class_names = ARGV[1..-1]
-# if (project_name != false) & (project_name.length > 0)
-#   creator = ProjectCreator.new()
-#   error = creator.make_project(project_name)
-#   if error == Errno::EEXIST
-#     puts "Error: Directory #{creator.snake_case_name(project_name)} Exists"
-#   else
-#     puts "Project created in directory #{creator.snake_case_name(project_name)}"
-#     if class_names != false & (class_names.length > 0)
-#       class_names = class_names.select {|name| name.length > 0}
-#       error = creator.add_class(class_names)
-#       if error.include?("Error: Class")
-#         puts error
-#       end
-#     end
-#   end
-# end
