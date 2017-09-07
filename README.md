@@ -18,6 +18,9 @@
 * Program makes script and spec files for a class name provided by the user
   * Example Input: "newclass"
   * Example Output: "lib/newclass.rb" and "spec/newclass_spec.rb"
+* Program returns an error if the files already exist.
+  * Example Input: "oldclass"
+  * Example Output: "Error: Class Already Exists"
 * Program properly formats class names provided by user
   * Example Input: "NewClass"
   * Example Output: "newclass.rb"
