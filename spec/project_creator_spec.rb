@@ -1,6 +1,7 @@
 require 'rspec'
 require 'fileutils'
 require 'project_creator'
+require 'pry'
 
 describe("ProjectCreator#make_project") do
   it("creates root directory with inputted name") do
@@ -39,10 +40,20 @@ describe("ProjectCreator#make_project") do
     }
     FileUtils.remove_dir("../new_project")
   end
+
+  it("adds basic gems to Gemfile") do
+    gemfile_expected = "source 'https://rubygems.org'\n\ngem 'rspec'\ngem 'pry'"
+    creator = ProjectCreator.new()
+    creator.make_project("new_project")
+    gemfile = File.open("../new_project/Gemfile", "r")
+    gemfile_contents = gemfile.read
+    expect(gemfile_contents).to(eq(gemfile_expected))
+    FileUtils.remove_dir("../new_project")
+  end
 end
 
 describe("ProjectCreator#snake_case_name") do
-  it("properly formats multi-word directory name") do
+  it("properly changes string to snake case") do
     creator = ProjectCreator.new()
     expect(creator.snake_case_name("New Project")).to(eq("new_project"))
   end
@@ -78,5 +89,33 @@ describe("ProjectCreator#add_class") do
       expect(File.exists?("../new_project/lib/" + name + ".rb")).to(eq(true))
       expect(File.exists?("../new_project/spec/" + name + "_spec.rb")).to(eq(true))
     end
+    FileUtils.remove_dir("../new_project")
+  end
+
+  it("adds basic text to class script file") do
+    creator = ProjectCreator.new()
+    creator.make_project("new_project")
+    creator.add_class(["newclass"])
+    script_file = File.open("../new_project/lib/newclass.rb", "r")
+    script_contents = script_file.read
+    expect(script_contents).to(eq("class Newclass\nend"))
+    FileUtils.remove_dir("../new_project")
+  end
+
+  it("adds basic text to class spec file") do
+    creator = ProjectCreator.new()
+    creator.make_project("new_project")
+    creator.add_class(["newclass"])
+    script_file = File.open("../new_project/spec/newclass_spec.rb", "r")
+    script_contents = script_file.read
+    expect(script_contents).to(eq("require 'rspec'\nrequire 'newclass'\n\ndescribe('Newclass') do\nend"))
+    FileUtils.remove_dir("../new_project")
+  end
+end
+
+describe("ProjectCreator#camel_case_name") do
+  it("properly formats string to camel case") do
+    creator = ProjectCreator.new()
+    expect(creator.camel_case_name("New class")).to(eq("NewClass"))
   end
 end
